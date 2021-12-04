@@ -1,10 +1,12 @@
 class App extends React.Component {                      
     constructor(props) {
         super(props)
+
+        this.input = React.createRef()
     
         this.state = {
              newWho: "Marceline the Vampire",
-             newWhat: "A wild rocket girl, yeah",
+             newWat: "A wild rocket girl, yeah",
              characters: [{
                  id: 1,
                  who: "Finn the Human",
@@ -21,10 +23,17 @@ class App extends React.Component {
         }
     }
 
+
+    componentDidMount = () => {
+
+    }
+
+
+
     listOfDudes = () => {
         return this.state.characters.map(dude => 
             <li key = {dude.id} className = "dude"> 
-                <a className = "ctrl">x</a> 
+                <a className = "ctrl" onClick={() => this.removeDude(dude)}>x</a> 
 
                 <article className = {
                     dude.cool < 10 ? "faded" : dude.cool > 50 ? "gold" : ""
@@ -34,7 +43,7 @@ class App extends React.Component {
                     <span>{dude.wat}</span>
                 </article>
 
-                <input className = "cislo" type = "number" value = {dude.cool} />
+                <input className = "cislo" type = "number" value = {dude.cool} onChange = {this.handleCool(dude)} />
                 <br />
             </li>
             
@@ -49,19 +58,39 @@ class App extends React.Component {
 
     handleWat = event => {
         this.setState({
-            newWhat: event.target.value
+            newWat: event.target.value
         })
     }
 
+    handleCool = dude => event => {
+        const cool = +event.target.value
+        this.setState(state => {
+            return {
+                characters: state.characters.map(item => 
+                    item === dude ? {...dude, cool} : item
+                )
+            }
+        })
+    }
+
+    removeDude = dude => {
+        this.setState(state => {
+            return {
+                characters: state.characters.filter(item => item !== dude)
+            }
+        })
+    }
+
+
+
     handleSubmit = event => {
-        if( event.key === "Enter") {
+        if( event.key === "Enter" && this.state.newWho && this.state.newWat) {
             this.setState(state => {
 
                 const newDude = {
                     id: Math.max(...state.characters.map(d => d.id)) + 1,
                          who: this.state.newWho,
-                         wat: this.state.newWho,
-                         wat: this.state.newWhat,
+                         wat: this.state.newWat,
                          cool: 15
                 }
     
@@ -69,12 +98,20 @@ class App extends React.Component {
                 characters: [...state.characters, newDude]
                 }
             })
+
+            this.resetForm()
         }
-        
-
-        
-
     }
+
+    resetForm = () => {
+        this.setState({
+            newWho: "",
+            newWat: ""
+        })
+
+        this.input.current.focus()
+    }
+
 
     render() {
         return (
@@ -83,16 +120,16 @@ class App extends React.Component {
 
                 <form className="add-new" onKeyPress = {this.handleSubmit}>
                 
-                    <input type="text" value={this.state.newWho} onChange={this.handleWho} />
+                    <input autoFocus type="text" ref={this.input} value={this.state.newWho} onChange={this.handleWho} />
                    <br />
-                    <input type="text" value={this.state.newWhat} onChange={this.handleWat} />
+                    <input type="text" value={this.state.newWat} onChange={this.handleWat} />
                    
                 </form>   
                 
                 <p className="preview">
                     {this.state.newWho}     
                     <br />
-                    <small>{this.state.newWhat}</small>                                 
+                    <small>{this.state.newWat}</small>                                 
                 </p>
             </div>                                        
                                                             
