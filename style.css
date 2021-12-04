@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(81, 7, 151);
+    text-align: center;
+    font-size: 1.5em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: wheat;
+}
+
+strong {
+    color: darkorange;
+}
+
+ul, li {
+    list-style-type: none;
+    text-align: center;
+    line-height: 50px;
+}
+
+input {
+    line-height: 20px;
+    border: none;
+    border-bottom: 3px solid white;
+    background: none;
+    text-align: center;
+    font-size: 1em;
+    color: white;
+}
+
+
+
+
+.cislo {
+    position: relative;
+    float: right;
+    width: 50px;
+    right: 255px;
+    top: -65px;
+}
+
+article {
+    border: 3px solid palevioletred;
+    border-radius: 15px;
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    background: tan;
+    color: #000;
+}
+
+
+a {
+    border: solid red;
+    border-radius: 50px;
+    padding: 10px;
+    background: rosybrown;
+    float: left;
+}
+
+
+.faded {
+    opacity: 0.5;
+}
+
+.gold {
+    border: 10px solid yellow;
+}
